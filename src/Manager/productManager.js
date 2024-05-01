@@ -21,13 +21,21 @@ export default class ProductManager {
 
   async createProduct(obj) {
     try {
-      const product = {
+        const { name, description, price, thumbnail, code, stock } = obj;
+        if (!name || !description || !price || !thumbnail || !code || !stock) {
+          console.log("Todos los campos son olbigatorios");
+          return;
+        }
+       const product = {
         id: uuidv4(),
         ...obj,
       };
       const products = await this.getProducts();
-      const productExist = products.some((p) => p.name == product.name);
-      if (productExist) {return "Product already exist";}
+      const codeExist = products.some((p) => p.code == product.code);
+      if (codeExist) {
+          console.log("Product code already exist")
+          return 
+        }
      else{ products.push(product);
       await fs.promises.writeFile(this.path, JSON.stringify(products));
       return product;}
