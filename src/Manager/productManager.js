@@ -21,13 +21,14 @@ export default class ProductManager {
 
   async createProduct(obj) {
     try {
-        const { name, description, price, thumbnail, code, stock } = obj;
-        if (!name || !description || !price || !thumbnail || !code || !stock) {
+        const { title, description, price, code, stock, category } = obj;
+        if (!title || !description || !price || !stock|| !category || !code) {
           console.log("Todos los campos son olbigatorios");
           return;
         }
        const product = {
         id: uuidv4(),
+        status:true,
         ...obj,
       };
       const products = await this.getProducts();
