@@ -1,12 +1,15 @@
+import { __dirname } from "../../path.js";
 import fs from "fs";
 import { v4 as uuidv4 } from "uuid";
 
-export default class ProductManager {
+const path = `${__dirname}/data/products.json`
+
+export default class ProductDaoFs {
   constructor(path) {
     this.path = path;
     this.code = "utf8";
   }
-  async getProducts() {
+  async getAll() {
     try {
       if (fs.existsSync(this.path)) {
         const products = await fs.promises.readFile(this.path, this.code);
@@ -19,7 +22,7 @@ export default class ProductManager {
     }
   }
 
-  async createProduct(obj) {
+  async create(obj) {
     try {
         const { title, description, price, code, stock, category } = obj;
         if (!title || !description || !price || !stock|| !category || !code) {
@@ -31,7 +34,7 @@ export default class ProductManager {
         status:true,
         ...obj,
       };
-      const products = await this.getProducts();
+      const products = await this.getAll();
       const codeExist = products.some((p) => p.code == product.code);
       if (codeExist) {
           console.log("Product code already exist")
@@ -44,9 +47,9 @@ export default class ProductManager {
       console.log(error);
     }
   }
-  async updateProduct(obj, id) {
+  async update(obj, id) {
     try {
-      const products = await this.getProducts();
+      const products = await this.getAll();
       const productIndex = products.findIndex((p) => p.id === id);
       if (productIndex === -1) {
         return "Product not found";
@@ -61,10 +64,10 @@ export default class ProductManager {
       console.log(error);
     }
   }
-  async deleteProduct(id) {
-    const products = await this.getProducts();
+  async remove(id) {
+    const products = await this.getAll();
     if (products.length > 0) {
-      const productExist = await this.getProductById(id);
+      const productExist = await this.getById(id);
       if (productExist) {
         const newProducts = products.filter((p) => p.id !== id);
         await fs.promises.writeFile(this.path, JSON.stringify(newProducts));
@@ -72,10 +75,10 @@ export default class ProductManager {
       } 
     } else return null
   }
-  async getProductById(id) {
+  async getById(id) {
     try {
-      const products = await this.getProducts();
-      const productExist = products.find((p) => p.id === id);
+      const products = await this.getAll();
+      const productExist = products.find((p) => p.id === parseInt(id));
       if (!productExist) return null;
       return productExist;
     } catch (error) {

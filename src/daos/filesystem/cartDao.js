@@ -1,15 +1,16 @@
-import { __dirname } from "../path.js";
+import { __dirname } from "../../path.js";
 import fs from "fs";
 import { v4 as uuidv4 } from "uuid";
-import ProductManager from "./productManager.js";
+import ProductDaoFs from "./productDao.js";
 
-const productManager = new ProductManager(`${__dirname}/data/products.json`);
+const path = `${__dirname}/data/carts.json`;
+
 export default class CartManager {
   constructor(path) {
     this.path = path;
     this.code = "utf8";
   }
-  async getAllCarts() {
+  async getAll() {
     try {
       if (fs.existsSync(this.path)) {
         const carts = await fs.promises.readFile(this.path, this.code);
@@ -22,13 +23,13 @@ export default class CartManager {
     }
   }
 
-  async createCart() {
+  async create() {
     try {
       const cart = {
         id: uuidv4(),
         products: [],
       };
-      const cartsFile = await this.getAllCarts();
+      const cartsFile = await this.getAll();
       cartsFile.push(cart);
       await fs.promises.writeFile(this.path, JSON.stringify(cartsFile));
       return cart;
@@ -37,9 +38,9 @@ export default class CartManager {
     }
   }
 
-  async getCartById(id) {
+  async getById(id) {
     try {
-      const carts = await this.getAllCarts();
+      const carts = await this.getAll();
       const cartExist = carts.find((c) => c.id === id);
       if (!cartExist) return null;
       return cartExist;
@@ -48,29 +49,41 @@ export default class CartManager {
     }
   }
 
-  async addProductToCart(cid, pid) {
+  async addProductToCard(cId, pId) {
     try {
-      const prodExist = await productManager.getProductById(pid);
+      const prodExist = await ProductDaoFs.getById(pId);
       if (!prodExist) return console.log("Product not exist");
-      const cartExist = await this.getCartById(cid);
+      const cartExist = await this.getById(cId);
       if (!cartExist) return console.log("Cart not exist");
-      let cartFile = await this.getAllCarts();
-      const prodExistInCart = cartExist.products.find((p) => p.id === pid);
+      let cartFile = await this.getAll();
+      const prodExistInCart = cartExist.products.find((p) => p.id === pId);
       if (!prodExistInCart) {
         const product = {
-          id: pid,
+          id: pId,
           quantity: 1,
         };
         cartExist.products.push(product);
       } else prodExistInCart.quantity++;
       const updatedCarts = cartFile.map((c) => {
-        if (c.id === cid) return cartExist;
+        if (c.id === cId) return cartExist;
         return c;
       });
-      await fs.promises.writeFile(this.path,JSON.stringify(updatedCarts))
-      return cartExist
+      await fs.promises.writeFile(this.path, JSON.stringify(updatedCarts));
+      return cartExist;
     } catch (error) {
       console.log(error);
     }
+  }
+
+  async remove(id) {
+    const carts = await this.getAll();
+    if (carts.length > 0) {
+      const cartExist = await this.getById(id);
+      if (cartExist) {
+        const newCart = carts.filter((p) => p.id !== id);
+        await fs.promises.writeFile(this.path, JSON.stringify(newCart));
+        return cartExist;
+      }
+    } else return null;
   }
 }
