@@ -1,6 +1,6 @@
 import { CartModel } from "./models/cartModel.js";
 
-export default class CartModelMongoDb {
+export default class ProductDaoMongoDb {
   async getAll() {
     try {
       const response = await CartModel.find({});

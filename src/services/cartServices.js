@@ -9,13 +9,13 @@
 import CartDaoMongoDb from "../daos/mongodb/cartDao.js";
 import ProductDaoMongoDb from "../daos/mongodb/productDao.js";
 const CartDao = new CartDaoMongoDb();
-const ProductDao = new ProductDaoMongoDb();
+const prodDao = new ProductDaoMongoDb();
 
 //------------------------------------------------------------------//
 
 export const addProductToCard = async (cId, pId) => {
   try {
-    const prodExist = ProductDao.getById(cId);
+    const prodExist = prodDao.getById(cId);
     if (!prodExist) {
       return null;
     } else {
