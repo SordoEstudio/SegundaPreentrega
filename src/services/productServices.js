@@ -5,7 +5,7 @@
 //------------------------------------------------------------------//
 //-------------------------| Dao de Mongo |-------------------------//
 import ProductDaoMongoDb from '../daos/mongodb/productDao.js'
-const ProductDao = new ProductDaoMongoDb()
+const prodDao = new ProductDaoMongoDb()
 //------------------------------------------------------------------//
 
 export const getAll = async()=>{
@@ -43,7 +43,7 @@ export const update = async(id, obj)=>{
 
 export const remove = async(id)=>{
     try {
-        return await prodDao.delete(id)
+        return await prodDao.remove(id)
     } catch (error) {
         throw new Error(error)
     }

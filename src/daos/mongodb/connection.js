@@ -9,6 +9,6 @@ export const initMongoDb = async()=>{
         await mongoose.connect(MONGO_URL)
         console.log('Conectado a la Db de MongoDb')
     } catch (error) {
-        console.log(error)
+        console.log(`conection ${error}`)
     }
 }
