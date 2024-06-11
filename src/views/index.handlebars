@@ -1,0 +1,21 @@
+<h1>TODOS LOS PRODUCTOS</h1>
+<h2>Pagina {{info.page}} de {{info.totalPages}}</h2>
+{{#if info.hasPrevPage}}
+<a href="http://localhost:8080/views/products/?page={{info.prevPage}}&limit={{info.limit}}"> Previa</a>
+{{/if}}
+{{#if info.hasNextPage}}
+<a href="http://localhost:8080/views/products/?page={{info.nextPage}}&limit={{info.limit}}">Siguiente</a>
+{{/if}}
+        {{#each products}}
+        <div>
+        <h3>{{title}}</h3>
+      <p>Precio: {{price}}</p>
+      <p>Cantidad: {{stock}}</p>
+      <p>Descripcion: {{description}}</p>
+      <p>Código: {{code}}</p>
+      <p>Categoría: {{category}}</p>
+      <p>Imagenes: {{thumbnail}}</p>
+      <button >Agregar al carrito</button>
+        </div>
+        {{/each}} 
+        
