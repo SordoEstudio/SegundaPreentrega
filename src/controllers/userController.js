@@ -23,8 +23,8 @@ export const login = async (req, res, next) => {
 
 export const register = async (req, res, next) => {
   try {
-    const { mail, password } = req.body;
-    if (mail === "adminCoder@coder.com" && password === "admin") {
+    const { email, password } = req.body;
+    if (email === "adminCoder@coder.com" && password === "admin") {
       const user = await userDao.register({ ...req.body, role: "admin" });
       if(!user)res.status(401).json({ msg: "User already exist" });
       else res.redirect("/views/login");
