@@ -40,7 +40,7 @@ app.set("views", __dirname + "/views");
 app.use("/api/products", productRouter);
 app.use("/api/carts", cartRouter);
 app.use("/api/users", userRouter);
-app.use("/views", viewsRouter);
+app.use("/", viewsRouter);
 
 app.use(errorHandler);
 

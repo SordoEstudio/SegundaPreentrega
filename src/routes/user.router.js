@@ -8,6 +8,6 @@ router.post('/login', login)
 router.post('/register', register)
 router.get('/info',validateLogin,infoSession)
 router.get('/secretEndpoint', validateLogin, visit )
-router.post('/logout', logout)
+router.get('/logout', logout)
 
 export default router

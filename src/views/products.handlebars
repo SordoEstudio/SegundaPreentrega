@@ -1,0 +1,27 @@
+<h1>TODOS LOS PRODUCTOS</h1>
+<h4>Bienvenido {{user.first_name}} {{user.last_name}}</h4>
+<h5>Email: {{user.email}}</h5>
+<h5>Tienes permisos de {{user.role}}</h>
+<h3>
+<a href="http://localhost:8080/api/users/logout">LOGOUT</a>
+</h3>
+<h2>Pagina {{info.page}} de {{info.totalPages}}</h2>
+{{#if info.hasPrevPage}}
+<a href="http://localhost:8080/views/products/?page={{info.prevPage}}&limit={{info.limit}}"> Previa</a>
+{{/if}}
+{{#if info.hasNextPage}}
+<a href="http://localhost:8080/views/products/?page={{info.nextPage}}&limit={{info.limit}}">Siguiente</a>
+{{/if}}
+        {{#each products}}
+        <div>
+        <h3>{{title}}</h3>
+      <p>Precio: {{price}}</p>
+      <p>Cantidad: {{stock}}</p>
+      <p>Descripcion: {{description}}</p>
+      <p>Código: {{code}}</p>
+      <p>Categoría: {{category}}</p>
+      <p>Imagenes: {{thumbnail}}</p>
+      <button >Agregar al carrito</button>
+        </div>
+        {{/each}} 
+        
