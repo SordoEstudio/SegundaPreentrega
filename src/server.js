@@ -2,7 +2,6 @@ import { initMongoDb } from "./daos/mongodb/connection.js";
 import express from "express";
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
-
 import MongoStore from 'connect-mongo';
 import handlebars from "express-handlebars";
 import productRouter from "./routes/productsRouter.js";
@@ -11,6 +10,9 @@ import userRouter from "./routes/user.router.js";
  import viewsRouter from "./routes/views.router.js";
  import { errorHandler } from "./middlewares/errorHandler.js";
 import { __dirname } from "./path.js";
+import passport from "passport";
+import './passport/localStrategy.js'
+import './passport/githubStrategy.js'
 import "dotenv/config";
 
 const storeConfig = {
@@ -36,6 +38,9 @@ app.use(session(storeConfig));
 app.engine("handlebars", handlebars.engine());
 app.set("view engine", "handlebars");
 app.set("views", __dirname + "/views");
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use("/api/products", productRouter);
 app.use("/api/carts", cartRouter);

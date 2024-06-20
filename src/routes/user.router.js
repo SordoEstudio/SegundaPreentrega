@@ -1,13 +1,34 @@
-import {Router} from 'express'
-const router = Router()
-import {login, logout, visit, infoSession,register} from '../controllers/userController.js'
-import {validateLogin} from '../middlewares/validateLogin.js'
+import { Router } from "express";
+import {
+  loginResponse,
+  logout,
+  infoSession,
+  registerResponse,
+} from "../controllers/userController.js";
+import { validateLogin } from "../middlewares/validateLogin.js";
+import { isAuth } from "../middlewares/isAuth.js";
+import passport from "passport";
 
-router.post('/login', login)
+const router = Router();
 
-router.post('/register', register)
-router.get('/info',validateLogin,infoSession)
-router.get('/secretEndpoint', validateLogin, visit )
-router.get('/logout', logout)
+router.post("/login", passport.authenticate("login"), loginResponse);
 
-export default router
+router.post("/register", passport.authenticate("register"), registerResponse);
+
+router.get(
+  "/registergithub",
+  passport.authenticate("github", {
+    failureRedirect: "/login",
+    successRedirect: "/api/users/profileGithub",
+  }),
+  (req, res) => res.send("ok")
+);
+
+router.get("/profile", isAuth, (req,res)=>{
+    const user = req.user.toObject()
+    res.render('/views/profilegithub',{user})})
+
+router.get("/info", validateLogin, infoSession);
+router.get("/logout", logout);
+
+export default router;

@@ -4,10 +4,17 @@ export default class UserDao {
   constructor(model) {
     this.model = model;
   }
-  async findByEmail(email) {
+  async getUserByEmail(email) {
     try {
-      const currentUser = await UserModel.findOne({ email: email });
-
+      const currentUser = await this.model.findOne( {email} );
+      return currentUser;
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+  async getUserById(id) {
+    try {
+      const currentUser = await this.model.findById( id );
       return currentUser;
     } catch (error) {
       throw new Error(error);
@@ -15,17 +22,14 @@ export default class UserDao {
   }
   async register(user) {
     try {
-      const { email } = user;
-      const existUser = await UserModel.findOne({ email: email });
-      if (!existUser) return await UserModel.create(user);
-      else return null;
+      return await this.model.create(user);
     } catch (error) {
       throw new Error(error);
     }
   }
   async login(email) {
     try {
-      return await this.model.findOne({'email': email });
+      return await this.model.findOne({ email });
     } catch (error) {
       throw new Error(error);
     }

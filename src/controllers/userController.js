@@ -1,56 +1,31 @@
-import UserDao from "../daos/mongodb/userDao.js";
-import { UserModel } from "../daos/mongodb/models/userModel.js";
+import * as services from "../services/userServices.js";
 import { createHash, isValidPassword } from "../utils.js";
 
-const userDao = new UserDao(UserModel);
-
-export const login = async (req, res, next) => {
+export const registerResponse = (req, res, next) => {
   try {
-    const { email, password } = req.body;
-    const user = await userDao.login(email);
-    if (!user) {
-      res.status(401).json({ msg: "Fallo autenticacion" });
-      //res.redirect('/views/error-login)
-    }
-    if (isValidPassword(password,user)) {
-      req.session.email = email;
-      req.session.password = password;
-      res.redirect("/products");
-    }
-else{    res.status(401).json({ msg: "Fallo autenticacion" });
-}  } catch (error) {
-    next(error);
-  }
-};
-
-export const register = async (req, res, next) => {
-  try {
-    const { email, password } = req.body;
-    if (email === "adminCoder@coder.com" && password === "admin") {
-      const user = await userDao.register({
-        ...req.body,
-        role: "admin",
-        password: createHash(password),
-      });
-      if (!user) res.status(401).json({ msg: "User already exist" });
-      else res.redirect("/login");
-    } else {
-      const user = await userDao.register({
-        ...req.body,
-        password: createHash(password),
-      });
-      if (!user) res.status(401).json({ msg: "User already exist" });
-      else res.redirect("/login");
-    }
+    res.json({ msg: "Registro ok", session: req.session });
   } catch (error) {
     next(error);
   }
 };
-export const visit = (req, res, next) => {
+export const loginResponse = async (req, res, next) => {
   try {
-    req.session.info && req.session.info.contador++;
+    let id = null;
+    if (req.session.passport && req.session.passport.user) {
+      id = req.session.passport.user;
+    }
+    const user = await services.getUserById(id);
+    if (!user) res.status(401).json({ msg: "Error de autenticacion" });
+    const { first_name, last_name, email, age, role } = user;
     res.json({
-      msg: `${req.session.info.userName} ha visitado el sitio ${req.session.info.contador} veces`,
+      msg: "Login Ok",
+      user: {
+        first_name,
+        last_name,
+        email,
+        age,
+        role
+      },
     });
   } catch (error) {
     next(error);
