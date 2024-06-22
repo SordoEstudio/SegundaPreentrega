@@ -14,11 +14,11 @@ const UserSchema = new Schema({
     required: true,
   },
   age: {
-    type: Number,
-    required: true,
+    type: Number
   },
-  password: { type: String, required: true },
-  role: { type: String, default:'user'}
+  password: { type: String,required: true},
+  role: { type: String, default:'user'},
+  isGithub:{type: Boolean, default:false}
 });
 
 export const UserModel = model("users", UserSchema);

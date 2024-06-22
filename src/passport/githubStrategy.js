@@ -12,7 +12,6 @@ const strategyConfig = {
 
 const registerOrLogin = async (accessToken, refreshToken, profile, done) => {
   try {
-    //console.log(profile);
     const email = profile._json.email ?? ''
     const image = profile._json.avatar_url ?? ''
     const first_name = profile.displayName.split(' ')[0]

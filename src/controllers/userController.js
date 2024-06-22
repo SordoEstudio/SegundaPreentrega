@@ -17,7 +17,7 @@ export const loginResponse = async (req, res, next) => {
     const user = await services.getUserById(id);
     if (!user) res.status(401).json({ msg: "Error de autenticacion" });
     const { first_name, last_name, email, age, role } = user;
-    res.json({
+    return({
       msg: "Login Ok",
       user: {
         first_name,
@@ -52,3 +52,21 @@ export const logout = (req, res, next) => {
     next(error);
   }
 };
+
+
+export const githubResponse = async(req, res,next) => {
+  try {
+    const { first_name, last_name, email, age, role } = req.user;
+    res.json({msg:'Loguin ok con github',
+      user:{
+        first_name,
+        last_name,
+        email,
+        role
+      }
+    })
+
+  } catch (error) {
+    next(error);
+  }
+}

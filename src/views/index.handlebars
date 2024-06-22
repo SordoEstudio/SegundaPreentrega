@@ -1,10 +1,12 @@
 <h1>LOGUEARSE</h1>
-<form method="post" action="/api/users/login">
+<form method="post" action="/api/users/loginlocal">
 Email: <input type="text" name="email" id="email"/></br></br>
 Contraseña: <input type="password" name="password" id="password"/></br></br>
 <input type="submit" label="INGRESAR"/>
 </form>
-</br></br>
+</br>
 <p>Aun no esats registrado?</p>
 <button onClick="location.href=`/register`">REGISTRARSE</button>
-<button onClick="location.href=`/api/users/registergithub`">REGISTRARSE CON GITHUB</button>
+</br>
+</br>
+<button onClick="location.href=`api/users/profile`">REGISTRARSE CON GITHUB</button>

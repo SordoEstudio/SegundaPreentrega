@@ -4,6 +4,7 @@ import {
   logout,
   infoSession,
   registerResponse,
+  githubResponse,
 } from "../controllers/userController.js";
 import { validateLogin } from "../middlewares/validateLogin.js";
 import { isAuth } from "../middlewares/isAuth.js";
@@ -11,22 +12,38 @@ import passport from "passport";
 
 const router = Router();
 
-router.post("/login", passport.authenticate("login"), loginResponse);
+/* router.post("/login", passport.authenticate("login"), loginResponse); */
 
-router.post("/register", passport.authenticate("register"), registerResponse);
+router.post(
+  "/register",
+  passport.authenticate(
+    "register",
 
-router.get(
-  "/registergithub",
-  passport.authenticate("github", {
-    failureRedirect: "/login",
-    successRedirect: "/api/users/profileGithub",
-  }),
-  (req, res) => res.send("ok")
+    {
+      failureRedirect: "/",
+      successRedirect: "/",
+      passReqToCallback: true,
+    }
+  )
 );
 
-router.get("/profile", isAuth, (req,res)=>{
-    const user = req.user.toObject()
-    res.render('/views/profilegithub',{user})})
+router.post(
+  "/loginlocal",
+  passport.authenticate("login", {
+    failureRedirect: "/",
+    successRedirect: "/products",
+    passReqToCallback: true,
+  })
+);
+
+router.get(
+  "/profile",
+  passport.authenticate("github", {
+    failureRedirect: "/",
+    successRedirect: "/products",
+    passReqToCallback: true,
+  })
+);
 
 router.get("/info", validateLogin, infoSession);
 router.get("/logout", logout);
