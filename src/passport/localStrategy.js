@@ -29,7 +29,6 @@ const login = async (req, email, password, done) => {
       }
       return done(null, userLogin);
     } catch (error) {
-      console.log(error);
       return done(error);
     }
   };

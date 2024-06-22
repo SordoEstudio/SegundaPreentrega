@@ -1,10 +1,6 @@
 import { Router } from "express";
 import {
-  loginResponse,
   logout,
-  infoSession,
-  registerResponse,
-  githubResponse,
 } from "../controllers/userController.js";
 import { validateLogin } from "../middlewares/validateLogin.js";
 import { isAuth } from "../middlewares/isAuth.js";
@@ -20,7 +16,7 @@ router.post(
     "register",
 
     {
-      failureRedirect: "/",
+      failureRedirect: "/error",
       successRedirect: "/",
       passReqToCallback: true,
     }
@@ -30,7 +26,7 @@ router.post(
 router.post(
   "/loginlocal",
   passport.authenticate("login", {
-    failureRedirect: "/",
+    failureRedirect: "/error",
     successRedirect: "/products",
     passReqToCallback: true,
   })
@@ -39,13 +35,12 @@ router.post(
 router.get(
   "/profile",
   passport.authenticate("github", {
-    failureRedirect: "/",
+    failureRedirect: "/error",
     successRedirect: "/products",
     passReqToCallback: true,
   })
 );
 
-router.get("/info", validateLogin, infoSession);
 router.get("/logout", logout);
 
 export default router;
