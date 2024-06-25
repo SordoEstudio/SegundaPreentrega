@@ -33,7 +33,7 @@ router.post(
 );
 
 router.get(
-  "/profile",
+  "/profilegithub",
   passport.authenticate("github", {
     failureRedirect: "/error",
     successRedirect: "/products",

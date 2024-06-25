@@ -1,15 +1,5 @@
-Contidual de aca la Prentrega _02M2
-Refactor a nuestro login
 ------------------------------------
-el response login 
-devuelve 
-	
-msg	"Login Ok"
-user	
-first_name	"Coder"
-last_name	"Admin"
-email	"adminCoder@coder.com"
-age	5
-role	"admin"
-------------------------------------
-el login de github esta OOOOOOOKEEEEEEYYYYYY
+Preentrega entregada (act) 22.06
+Pagina de error y github login/register
+
+REPOSITORIO DE PREENTREGAS
