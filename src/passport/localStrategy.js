@@ -9,29 +9,32 @@ const strategyConfig = {
 };
 
 const register = async (req, email, password, done) => {
-    try {
-        const user = await services.getUserByEmail(email);
-        if(user) return done(null, false);
-        const newUser = await services.register(req.body);
-        return done(null, newUser);
-    } catch (error) {
-        console.log(error);
-        return done(error);
-    }
+  try {
+    const user = await services.getUserByEmail(email);
+    if (user) return done(null, false);
+    const newUser = await services.register(req.body);
+    return done(null, newUser);
+  } catch (error) {
+    console.log(error);
+    return done(error);
+  }
 };
 
 const login = async (req, email, password, done) => {
-    try {
-      const userLogin = await services.login( email, password );
-      if (!userLogin) {
-        req.session.destroy();
-        return done(null, false, { msg: "Error de autenticacion" });
-      }
-      return done(null, userLogin);
-    } catch (error) {
-      return done(error);
+  try {
+    const user = await services.getUserByEmail(email);
+    if (user.isGithub)
+      return done(null, false), { msg: "Debe autenticarse a travez de github" };
+    const userLogin = await services.login(email, password);
+    if (!userLogin) {
+      req.session.destroy();
+      return done(null, false, { msg: "Error de autenticacion" });
     }
-  };
+    return done(null, userLogin);
+  } catch (error) {
+    return done(error);
+  }
+};
 
 /*  VERSION ANTERIOR
 const login = async (req, email, password, done) => {
