@@ -1,19 +1,6 @@
-//----------------------| Dao de File System |----------------------//
-import {__dirname } from "../path.js"
-import ProductDaoFs from "../daos/filesystem/productDao.js"
-const daoFs = new ProductDaoFs(`${__dirname}/data/products.json`)
-//-------------------------| Dao de Mongo |-------------------------//
-import ProductDaoMongoDb from '../daos/mongodb/productDao.js'
-const daoMongo = new ProductDaoMongoDb()
-//------------------------------------------------------------------//
-import "dotenv/config";
-let prodDao
 
-if (process.env.PERSISTENCE === "MONGO") {
-     prodDao = daoMongo
-}else{
-    prodDao = daoFs
-}
+import { userDao, prodDao, cartDao } from '../daos/factory.js'
+
 export const getAll = async(page, limit, title, sort, category)=>{
     try {
         return await prodDao.getAll(page, limit, title, sort, category)
@@ -42,6 +29,13 @@ export const create = async(obj)=>{
 export const update = async(id, obj)=>{
     try {
         return await prodDao.update(id, obj)
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+export const updateStock = async(id, stock)=>{
+    try {
+        return await prodDao.updateStock(id, stock)
     } catch (error) {
         throw new Error(error)
     }

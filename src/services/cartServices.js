@@ -1,27 +1,5 @@
-//----------------------| Dao de File System |----------------------//
-import { __dirname } from "../path.js";
-import CartDaoFs from "../daos/filesystem/cartDao.js";
-import ProductDaoFs from "../daos/filesystem/productDao.js";
-const cartDaoFs = new CartDaoFs(`${__dirname}/data/carts.json`);
-const prodDaoFs = new ProductDaoFs(`${__dirname}/data/products.json`);
-//-------------------------| Dao de Mongo |-------------------------//
-import CartDaoMongoDb from "../daos/mongodb/cartDao.js";
-import ProductDaoMongoDb from "../daos/mongodb/productDao.js";
-const cartDaoMongo = new CartDaoMongoDb();
-const prodDaoMongo = new ProductDaoMongoDb();
-//------------------------------------------------------------------//
-import "dotenv/config";
 
-let prodDao;
-let cartDao;
-
-if (process.env.PERSISTENCE === "MONGO") {
-  prodDao = prodDaoMongo;
-  cartDao = cartDaoMongo;
-} else {
-  prodDao = prodDaoFs;
-  cartDao = cartDaoFs;
-}
+import { userDao, prodDao, cartDao } from '../daos/factory.js'
 
 export const addProductToCard = async (cId, pId) => {
   try {

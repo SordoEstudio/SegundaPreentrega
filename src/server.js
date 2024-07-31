@@ -14,7 +14,7 @@ import passport from "passport";
 import './passport/localStrategy.js'
 import './passport/githubStrategy.js'
 import "dotenv/config";
-
+import cors from 'cors'
 const storeConfig = {
     store: MongoStore.create({
         mongoUrl: process.env.MONGO_URL,
@@ -28,7 +28,7 @@ const storeConfig = {
 };
 
 const app = express();
-
+app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -49,7 +49,6 @@ app.use("/", viewsRouter);
 
 app.use(errorHandler);
 
-initMongoDb();
 
 const PORT = 8080;
 

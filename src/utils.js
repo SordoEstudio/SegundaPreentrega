@@ -8,3 +8,7 @@ export const createHash = (password)=>{
 export const isValidPassword = (password, user)=>{
     return bcrypt.compareSync(password, user.password)
 }
+
+export const createResponse = (res, statusCode, data) => {
+    return res.status(statusCode).json({data})
+}

@@ -1,5 +1,6 @@
 import * as services from "../services/userServices.js";
 import { createHash, isValidPassword } from "../utils.js";
+import { createResponse } from "../utils.js";
 
 export const registerResponse = (req, res, next) => {
   try {
@@ -31,7 +32,15 @@ export const loginResponse = async (req, res, next) => {
     next(error);
   }
 };
-
+export const login = async(req, res, next) =>{
+  try {
+   const token = await services.loginJWT(req.body);
+    res.cookie('token', token, { httpOnly: true });
+   !token ? createResponse(res, 404, token) : createResponse(res, 200, token);
+  } catch (error) {
+    next(error);
+  }
+};
 export const infoSession = (req, res, next) => {
   try {
     res.json({
@@ -52,7 +61,17 @@ export const logout = (req, res, next) => {
     next(error);
   }
 };
-
+export const profile =async(req, res, next)=>{
+  try {
+   if(req.user){
+    const { _id } = req.user;
+    const user = await services.userById(_id);
+    createResponse(res, 200, user)
+   } else createResponse(res, 401, { msg: 'Unhautorized' })
+  } catch (error) {
+    next(error);
+  }
+};
 
 export const githubResponse = async(req, res,next) => {
   try {

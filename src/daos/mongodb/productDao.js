@@ -1,3 +1,4 @@
+import { updateProductQuantity } from "../../services/cartServices.js";
 import { ProductModel } from "./models/productModel.js";
 
 export default class ProductDaoMongoDb {
@@ -50,7 +51,27 @@ export default class ProductDaoMongoDb {
       throw new Error(error);
     }
   }
-
+    async updateStock(id, stockChange) {
+      try {
+        const product = await ProductModel.findById(id);
+        if (!product) {
+          throw new Error(`Product with ID ${id} not found`);
+        }
+            const newStock = product.stock - stockChange;
+        if (newStock < 0) {
+          throw new Error(`Insufficient stock for product with ID ${id}`);
+        }
+            const updatedProduct = await ProductModel.findByIdAndUpdate(
+          id,
+          { stock: newStock },
+          { new: true }
+        );    
+        return updatedProduct;
+      } catch (error) {
+        throw new Error(`Failed to update stock: ${error.message}`);
+      }
+    }
+    
   async remove(id) {
     try {
       const response = await ProductModel.findByIdAndDelete(id);

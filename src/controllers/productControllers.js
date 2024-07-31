@@ -46,7 +46,6 @@ export const getById = async (req, res, next) => {
 export const create = async (req, res, next) => {
   try {
     const newProd = await service.create(req.body);
-
     if (!newProd) {
       throw { status: 404, message: "Error create product" };
     } else {

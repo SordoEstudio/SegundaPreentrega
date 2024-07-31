@@ -12,9 +12,7 @@ export default class CartDao {
 
   async getById(id) {
     try {
-      const response = await CartModel.findById(id).populate(
-        "products.product"
-      );
+      const response = await CartModel.findById(id).populate( "products.product");
       return response;
     } catch (error) {
       throw new Error(error);

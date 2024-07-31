@@ -14,11 +14,16 @@ const UserSchema = new Schema({
     required: true,
   },
   age: {
-    type: Number
+    type: Number,
   },
-  password: { type: String,required: true},
-  role: { type: String, default:'user'},
-  isGithub:{type: Boolean, default:false}
+  password: { type: String, required: true },
+  role: { type: String, default: "user" },
+  isGithub: { type: Boolean, default: false },
+  cart:{
+    type: Schema.Types.ObjectId,
+    ref:"carts",
+    default:null
+  }
 });
 
 export const UserModel = model("users", UserSchema);

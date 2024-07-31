@@ -40,10 +40,9 @@ export const create = async (req, res, next) => {
 
 export const addProductToCart = async (req, res, next) => {
   try {
-    const { cId } = req.params;
+    const {cart} = req.user
     const { pId } = req.params;
-    const response = await service.addProductToCard(cId, pId);
-
+    const response = await service.addProductToCard(cart, pId);
     if (!response) {
       throw { status: 404, message: "Error to update cart" };
     } else {
