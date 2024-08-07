@@ -83,3 +83,24 @@ export const remove = async (req, res, next) => {
     next(error);
   }
 };
+
+export const createProducts = async (req,res)=>{
+  try {
+    const {cant} = req.query
+    res.json(await service.createMockingProducts(cant))
+  } catch (error) {
+    console.log(error)
+  }
+}
+ export const getProducts = async (req,res)=>{
+  try {
+    res.json(service.getMockingProducts())
+  } catch (error) {
+    console.log(error)
+  }
+ }
+
+//createMockingProducts - services
+//getMockingProducts
+//createProducts - controller
+//getProducts
