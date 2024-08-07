@@ -11,14 +11,14 @@ export const getAll = async(page, limit, title, sort, category)=>{
     }
 }
 
-export const getById = async(id)=>{
+/* export const getById = async(id)=>{
     try {
         return await prodDao.getById(id)
     } catch (error) {
         throw new Error(error)
 
     }
-}
+} */
 
 export const create = async(obj)=>{
     try {
@@ -65,7 +65,9 @@ export const createMockingProducts = async (cant = 100)=>{
 }
 export const getMockingProducts = async()=>{
     try {
-        return await ProductModel.find({})
+        const products = await ProductModel.find({}).limit(100)
+        return products
+
     } catch (error) {
         throw new Error(error)
     }

@@ -28,7 +28,7 @@ export const getAll = async (req, res, next) => {
   }
 };
 
-export const getById = async (req, res, next) => {
+/* export const getById = async (req, res, next) => {
   try {
     const { id } = req.params;
     const prod = await service.getById(id);
@@ -41,7 +41,7 @@ export const getById = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-};
+}; */
 
 export const create = async (req, res, next) => {
   try {
@@ -94,7 +94,8 @@ export const createProducts = async (req,res)=>{
 }
  export const getProducts = async (req,res)=>{
   try {
-    res.json(service.getMockingProducts())
+    const products = await service.getMockingProducts()
+    res.json(products)
   } catch (error) {
     console.log(error)
   }

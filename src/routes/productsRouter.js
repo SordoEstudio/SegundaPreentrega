@@ -8,8 +8,8 @@ const router = Router();
 
 router.get("/",checkAuth, controller.getAll);
 
-router.get("/:id",checkAuth, controller.getById);
-
+/* router.get("/:id",checkAuth, controller.getById);
+ */
 router.post("/",[checkAuth,checkAdmin], controller.create);
 
 router.put("/:id",[checkAuth,checkAdmin], controller.update);
