@@ -1,22 +1,13 @@
-/* export const errorHandler = (error, req, res, next) => {
-  console.log(`error ${error.message}`);
-  const status = error.status || 400;
-  res.status(status).send(error.message);
-};
- */
-//Version de Gpt
+import { CustomError } from "../utils/customError.js";
 
-export const errorHandler = (error, req, res, next) => {
-  // Log completo del error para depuración
-  console.error(`Error: ${error.message}\nStack: ${error.stack}`);
-  
-  // Establece un estado predeterminado para los errores no esperados
-  const status = error.status || 500;
-  const message = error.message || "Internal Server Error";
-  
-  // Envía la respuesta con el estado y el mensaje del error
-  res.status(status).json({
-    status: status,
-    message: message,
-  });
+
+const errorHandler = (err, req, res, next) => {
+  if (err instanceof CustomError) {
+    return res.status(err.status).json({ error: err.message, code: err.code });
+  }
+
+  console.error('Unexpected error:', err);
+  res.status(500).json({ error: 'An unexpected error occurred.' });
 };
+
+export default errorHandler;

@@ -8,7 +8,7 @@ import productRouter from "./routes/productsRouter.js";
 import cartRouter from "./routes/cartRouter.js";
 import userRouter from "./routes/user.router.js";
  import viewsRouter from "./routes/views.router.js";
- import { errorHandler } from "./middlewares/errorHandler.js";
+ import errorHandler  from "./middlewares/errorHandler.js";
 import { __dirname } from "./path.js";
 import passport from "passport";
 import './passport/localStrategy.js'

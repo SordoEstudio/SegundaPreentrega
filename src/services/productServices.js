@@ -2,6 +2,8 @@
 import { userDao, prodDao, cartDao } from '../daos/factory.js'
 import { ProductModel } from '../daos/mongodb/models/productModel.js'
 import { generateProduct } from '../poduct.utils.js'
+import { CustomError } from '../utils/customError.js'
+import errorDictionary from '../utils/error.Dictionary.js'
 
 export const getAll = async(page, limit, title, sort, category)=>{
     try {
@@ -22,7 +24,11 @@ export const getAll = async(page, limit, title, sort, category)=>{
 
 export const create = async(obj)=>{
     try {
-        return await prodDao.create(obj)
+        const newProduct = await ProductModel.create(obj);
+        if (!newProduct) {
+          throw new CustomError(errorDictionary.PRODUCT_CREATION_FAILED);
+        }
+        return newProduct;
     } catch (error) {
         throw new Error(error)
     }
