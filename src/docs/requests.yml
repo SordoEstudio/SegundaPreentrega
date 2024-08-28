@@ -1,0 +1,68 @@
+components:
+  paraeters:
+    schemas:
+      products:
+        type: object
+        required: 
+          - title
+          - description
+          - price
+          - code
+          - stock
+          - categories
+        properties:
+          _id:
+            type: objectId
+            description: Identificador unico del producto
+          title:
+            type: string
+            description: Nombre del producto
+            example: Yerba mate Marolio
+          description:
+            type: string
+            description: Descripcion del producto
+            example: Yerba mate Marolio paquete Amarillo Kg.
+          price:
+            type: number
+            description: Precio del producto
+            example: 15.99
+          thumbnails:
+            type: array
+            items:
+              type: string
+              description: Imagen del producto
+          code:
+            type: string
+            description: Codigo del producto
+            example: YM-001
+          stock:
+            type: integer
+            description: Stock del producto
+            example: 100
+          category:
+            type: string
+            description: Categoria del producto
+            example: Bebidas
+          status:
+            type: boolean
+            description: Estatus del producto
+            default: true
+      carts:
+        type: object
+        required:
+          - products
+        properties:
+         products:
+          type: array
+          items:
+            _id: 
+              type: objectId
+              description: Identificador unico del producto
+            quantity:
+              type: number
+              description: Cantidad de productos en el carrito
+              default: 1
+            product:
+              type: object
+              items:
+                  $ref: '#/components/schemas/products'

@@ -1,4 +1,4 @@
-import { initMongoDb } from "./daos/mongodb/connection.js";
+
 import express from "express";
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
@@ -9,25 +9,34 @@ import cartRouter from "./routes/cartRouter.js";
 import userRouter from "./routes/user.router.js";
  import viewsRouter from "./routes/views.router.js";
  import errorHandler  from "./middlewares/errorHandler.js";
+ import config from './config/index.js'
 import { __dirname } from "./path.js";
 import passport from "passport";
 import './passport/localStrategy.js'
 import './passport/githubStrategy.js'
-import "dotenv/config";
-import cors from 'cors'
+/*  */import cors from 'cors'
+import { logger } from "./utils/logger.js";
+import swaggerUI from 'swagger-ui-express'
+import swaggerJSDoc from 'swagger-jsdoc'
+import {info} from './docs/info.js'
+
+
 const storeConfig = {
     store: MongoStore.create({
-        mongoUrl: process.env.MONGO_URL,
-        crypto: { secret: process.env.SECRET_KEY },
+        mongoUrl: config.MONGO_URL,
+        crypto: { secret: config.SECRET_KEY },
         ttl: 180,
     }),
-    secret: process.env.SECRET_KEY,
+    secret: config.SECRET_KEY,
     resave: true,
     saveUninitialized: true,
     cookie: { maxAge: 180000 }
 };
-
 const app = express();
+
+const specs = swaggerJSDoc(info); 
+
+app.use('/docs', swaggerUI.serve,swaggerUI.setup(specs))
 app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -50,9 +59,9 @@ app.use("/", viewsRouter);
 app.use(errorHandler);
 
 
-const PORT = 8080;
+const PORT = config.PORT;
 
-app.listen(PORT, () => console.log(`SERVER OK in ${PORT}`));
+app.listen(PORT, () => logger.info(`SERVER OK in ${PORT}`));
 
 
   

@@ -1,7 +1,7 @@
 
 import { userDao, prodDao, cartDao } from '../daos/factory.js'
 import { ProductModel } from '../daos/mongodb/models/productModel.js'
-import { generateProduct } from '../poduct.utils.js'
+import { generateProduct } from '../utils/poduct.utils.js'
 import { CustomError } from '../utils/customError.js'
 import errorDictionary from '../utils/error.Dictionary.js'
 

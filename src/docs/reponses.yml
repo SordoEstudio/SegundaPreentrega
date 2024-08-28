@@ -1,0 +1,42 @@
+components:
+  schemas:
+    products:
+      product:
+        type: object
+        properties:
+          _id:
+            type: objectId
+            description: Identificador unico del producto
+          title:
+            type: string
+            description: Nombre del producto
+          description:
+            type: string
+            description: Descripcion del producto
+          price:
+            type: number
+            description: Precio del producto
+          thumbnails:
+            type: array
+          code:
+            type: string
+            description: Codigo del producto
+          stock:
+            type: integer
+            description: Stock del producto
+          category:
+            type: string
+            description: Categoria del producto
+          status:
+            type: boolean
+            description: Estatus del producto
+        example:
+            _id: 66b3d8504dc08b168a09dd3c
+            title: Shirt
+            description: Adiuvo volo vestrum vivo.
+            price: 786
+            thumbnails: ["https://picsum.photos/seed/AlI3aHsr/640/480"]
+            code: 7q5o6Gh-DS
+            stock: 29
+            category: Computers
+            status: true

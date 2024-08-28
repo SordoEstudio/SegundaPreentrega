@@ -1,10 +1,12 @@
 import * as service from "../services/cartServices.js";
+import { logger } from "../utils/logger.js";
 
 export const getAll = async (req, res, next) => {
   try {
     const carts = await service.getAll();
     return res.status(200).json(carts);
   } catch (error) {
+    logger.error(error.message)
     next(error);
   }
 };
@@ -20,6 +22,7 @@ export const getById = async (req, res, next) => {
       return res.status(200).json(cart);
     }
   } catch (error) {
+    logger.error(error.message)
     next(error);
   }
 };
@@ -34,6 +37,7 @@ export const create = async (req, res, next) => {
       return res.status(200).json(`${newCart} : cart created Ok`);
     }
   } catch (error) {
+    logger.error(error.message)
     next(error);
   }
 };
@@ -49,6 +53,7 @@ export const addProductToCart = async (req, res, next) => {
       return res.status(200).json(response);
     }
   } catch (error) {
+    logger.error(error.message)
     next(error);
   }
 };
@@ -64,6 +69,7 @@ export const update = async(req,res,next)=>{
       res.status(200).json(cartUpd)
     }
   } catch (error) {
+    logger.error(error.message)
     next(error.message)
   }
 }
@@ -80,6 +86,7 @@ export const updateProductQuantity = async (req, res, next) => {
     return res.status(200).json(updateProdQuantity);
   }
     }catch(error){
+      logger.error(error.message)
       next(error.message);
     }
 };
@@ -93,6 +100,7 @@ export const remove = async (req, res, next) => {
       return res.status(200).json(cartDel);
     }
   } catch (error) {
+    logger.error(error.message)
     next(error);
   }
 }
@@ -107,6 +115,7 @@ export const remove = async (req, res, next) => {
           res.json({status:200,message:`Product ${pId} removed to cart ${cId}`})
         }
       }catch(error){
+        logger.error(error.message)
         next(error.message);
       }
   };
@@ -121,6 +130,7 @@ export const remove = async (req, res, next) => {
         res.json(clearCart)
       }
     } catch (error) {
+      logger.error(error.message)
       throw new Error(error)
     }
   }
