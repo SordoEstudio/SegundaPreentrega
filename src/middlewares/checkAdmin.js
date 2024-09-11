@@ -2,7 +2,6 @@ import { createResponse } from "../utils/utils.js";
 
 export const checkAdmin = async (req, res, next) => {
   try {
-    console.log("req user", req.user);
     const { role } = req.user;
     if (role !== "admin")
       createResponse(

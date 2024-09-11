@@ -34,7 +34,7 @@ export const create = async (req, res, next) => {
     if (!newCart) {
       throw { status: 404, message: "not creating cart" };
     } else {
-      return res.status(200).json(`${newCart} : cart created Ok`);
+      return res.status(200).json(newCart);
     }
   } catch (error) {
     logger.error(error.message)

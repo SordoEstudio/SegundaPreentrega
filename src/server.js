@@ -63,5 +63,4 @@ const PORT = config.PORT;
 
 app.listen(PORT, () => logger.info(`SERVER OK in ${PORT}`));
 
-
-  
+export default app

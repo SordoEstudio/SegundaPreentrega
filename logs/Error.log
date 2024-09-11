@@ -4,3 +4,7 @@
 [31merror[39m | 08-14-24 18:30:44 | This is an error log.
 [31merror[39m | 08-14-24 18:30:55 | This is an error log.
 [31merror[39m | 08-14-24 18:31:03 | This is an error log.
+[31merror[39m | 09-10-24 22:33:19 | Invalid status code: { products: [], _id: new ObjectId('66e0f35f83ad6f951fa666ff'), __v: 0 }
+[31merror[39m | 09-10-24 22:33:57 | Invalid status code: { products: [], _id: new ObjectId('66e0f384a998d0ccd6eaa2b2'), __v: 0 }
+[31merror[39m | 09-11-24 17:21:06 | Error: CastError: Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "carts"
+[31merror[39m | 09-11-24 17:21:30 | Error: CastError: Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "carts"
