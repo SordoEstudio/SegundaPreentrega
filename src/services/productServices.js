@@ -1,7 +1,6 @@
 
 import { userDao, prodDao, cartDao } from '../daos/factory.js'
 import { ProductModel } from '../daos/mongodb/models/productModel.js'
-import { generateProduct } from '../utils/poduct.utils.js'
 import { CustomError } from '../utils/customError.js'
 import errorDictionary from '../utils/error.Dictionary.js'
 
@@ -57,7 +56,7 @@ export const remove = async(id,user)=>{
     }
 }
 
-export const createMockingProducts = async (cant = 100)=>{
+/* export const createMockingProducts = async (cant = 100)=>{
     try {
         const productArray = []
         for (let i = 0; i < cant; i++) {
@@ -68,7 +67,7 @@ export const createMockingProducts = async (cant = 100)=>{
     } catch (error) {
         throw new Error(error)
     }
-}
+} */
 export const getMockingProducts = async()=>{
     try {
         const products = await ProductModel.find({}).limit(100)

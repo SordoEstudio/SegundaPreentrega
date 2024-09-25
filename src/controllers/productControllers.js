@@ -84,14 +84,14 @@ export const remove = async (req, res, next) => {
   }
 };
 
-export const createProducts = async (req,res)=>{
+/* export const createProducts = async (req,res)=>{
   try {
     const {cant} = req.query
     res.json(await service.createMockingProducts(cant))
   } catch (error) {
     console.log(error)
   }
-}
+} */
  export const getProducts = async (req,res)=>{
   try {
     const products = await service.getMockingProducts()

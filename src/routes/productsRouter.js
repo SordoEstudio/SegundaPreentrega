@@ -15,7 +15,7 @@ router.put("/:id",[checkAuth,checkAdmin], controller.update);
 
 router.delete("/:id",[checkAuth,checkAdmin], controller.remove);
 
-router.post('/mockingproducts', controller.createProducts)
-router.get('/mockingproducts', controller.getProducts)
+/* router.post('/mockingproducts', controller.createProducts)
+router.get('/mockingproducts', controller.getProducts) */
 
 export default router;
