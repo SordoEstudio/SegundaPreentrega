@@ -12,3 +12,4 @@ export const generateProduct = () => {
     status: faker.datatype.boolean()
   };
 };
+ 
