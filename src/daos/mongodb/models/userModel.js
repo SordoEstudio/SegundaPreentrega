@@ -19,11 +19,13 @@ const UserSchema = new Schema({
   password: { type: String, required: true },
   role: { type: String, default: "user" },
   isGithub: { type: Boolean, default: false },
-  cart:{
+  cart: {
     type: Schema.Types.ObjectId,
-    ref:"carts",
-    default:null
-  }
+    ref: "carts",
+    default: null,
+  },
+  last_conection: { type: Date, default: Date.now() },
+  active: { type: Boolean, default: true },
 });
 
 export const UserModel = model("users", UserSchema);

@@ -1,7 +1,6 @@
 import { UserModel } from "./models/userModel.js";
 
 export default class UserDao {
-
   async getUserByEmail(email) {
     try {
       const currentUser = await UserModel.findOne( {email} );
@@ -35,6 +34,13 @@ export default class UserDao {
   async update(id, obj) {
     try {
       return await UserModel.findByIdAndUpdate(id, obj, { new: true });
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+  async getAllUsers(){
+    try {
+      return await UserModel.find()
     } catch (error) {
       throw new Error(error);
     }

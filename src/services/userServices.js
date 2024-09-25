@@ -1,4 +1,4 @@
-import { createHash, isValidPassword } from "../utils/utils.js";
+import { createHash, hasBeenMoreTime, isValidPassword } from "../utils/utils.js";
 import jwt from "jsonwebtoken";
 import config from '../config/index.js'
 
@@ -87,7 +87,9 @@ export const loginJWT = async (user) => {
     if (!userExist) return null;
     const passValid = isValidPassword(password, userExist);
     if (!passValid) return null;
-    if (userExist && passValid) return generateToken(userExist) 
+    if (userExist && passValid) 
+      await updateLastConection(userExist._id)
+      return generateToken(userExist) 
   } catch (error) {
     throw new Error(error);
   }
@@ -110,7 +112,52 @@ return await userDao.update(user._id, {password:newPass})
   } catch (error) {
     
   }
-}
-// DESDE 01:19:47
 
-// https://coderhouse.zoom.us/rec/play/tIFyyUvb4cAa67swXdd0-uXX13eODPaUtyomcbWJhP1Gf1WtJ0b4IsCRElmfNDcZCxmzr9cA8ltOPzHQ.pATsiFQqJo5aDep0?canPlayFromShare=true&from=share_recording_detail&continueMode=true&componentName=rec-play&originRequestUrl=https%3A%2F%2Fcoderhouse.zoom.us%2Frec%2Fshare%2FaSgDb3WukywS9ksJ1wLOX7f7e-dLJMivW6rsPUxhtug3GUuTU_JrqJWP_wN6q0ok.LbJ2NXjF3hVBLLJn
+  
+}
+const updateLastConection = async (userId)=>{
+  return await userDao.update(userId, {lastConection:new Date()
+  })
+}
+
+export const checkUsersLastConection = async ()=>{
+  try {
+    const usersInactive = []
+    const users = await userDao.getAllUsers()
+    if(users.length > 0) {
+      for(const user of users){
+        if(user.last_conection && hasBeenMoreTime(user.last_conection)){
+          await userDao.update(user._id, {active:false})
+          usersInactive.push(user.email)
+/*           
+await sendMail(user,'logout')
+ */
+          console.log(`El usuario ${user.email} esta inactivo...`)
+        }
+      }
+    }
+    return usersInactive
+  }catch(error){
+    throw new Error(error)
+  }
+}
+export const getAllUsersResponse = async ()=>{
+  try {
+    const usersResponse = []
+    const users = await userDao.getAllUsers()
+    if(users.length > 0) {
+      for(const user of users){
+
+        usersResponse.push({
+          'Name': `${user.first_name} ${user.last_name}`,
+            'email':user.email,
+            'role':user.role
+          })
+        }
+      }
+      return usersResponse
+    }
+  catch(error){
+    throw new Error(error)
+  }
+}

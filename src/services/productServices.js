@@ -49,7 +49,7 @@ export const updateStock = async(id, stock)=>{
     }
 }
 
-export const remove = async(id)=>{
+export const remove = async(id,user)=>{
     try {
         return await prodDao.remove(id)
     } catch (error) {

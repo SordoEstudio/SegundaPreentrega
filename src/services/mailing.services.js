@@ -37,12 +37,15 @@ export const sendMail = async (user, service, token = null) => {
           ? "Bienbenido/a"
           : service === "resetPass"
           ? "Restablecer contraseña"
-          : "",
+          : "logout"
+          ? "Su cuenta podria ser eliminada"
+
+          :"",
       html: msg,
     };
     const response = await transporter.sendMail(gmailOptions);
     if (token) return token;
-    console.log("email enviado", response);
+    console.log("email enviado");
   } catch (error) {
     throw new Error(error);
   }

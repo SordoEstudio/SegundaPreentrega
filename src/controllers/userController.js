@@ -131,3 +131,20 @@ export const updatePass = async (req, res, next) => {
 next(error) 
 }
 }
+export const checkUsersLastConection = async(req,res,next)=>{
+try {
+  const response = await services.checkUsersLastConection()
+    createResponse(res, 200, response)
+ } catch (error) {
+  next(error)
+}
+}
+export const getAllUsers = async(req, res, next)=>{
+  try {
+    const response = await services.getAllUsersResponse()
+return     createResponse(res, 200, response)
+
+  } catch (error) {
+   next(error) 
+  }
+}
