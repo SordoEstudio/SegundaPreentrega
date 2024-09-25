@@ -1,4 +1,4 @@
-import { faker } from '@faker-js/faker';
+/* import { faker } from '@faker-js/faker';
 
 export const generateProduct = () => {
   return {
@@ -12,4 +12,4 @@ export const generateProduct = () => {
     status: faker.datatype.boolean()
   };
 };
- 
+  */
